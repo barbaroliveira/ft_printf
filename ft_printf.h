@@ -17,6 +17,8 @@
 
 
 /*_________________________________[FUNCTIONS]________________________________*/
-
+int ft_putchar(char c);
+int ft_printstr(char *str);
+int ft_formats(va_list args, const char format);
 
 #endif
