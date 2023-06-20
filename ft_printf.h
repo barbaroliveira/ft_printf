@@ -13,6 +13,8 @@
 #ifndef FTPRINTF_H
 # define FTPRINTF_H
 
+# include <unistd.h>
+# include <stdarg.h>
 /*__________________________________[libraries]_________________________________*/
 
 
