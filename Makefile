@@ -10,27 +10,38 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= libft.a
+NAME		= libftprintf.a
 
 SRCS		= ft_printf.c
 
-OBJS		= ${SRCS:.c=.o}
+OBJ		= ${SRCS:.c=.o}
+
+INCLUDES = inc/libftprintf.h
 
 CC		= cc
+
 RM		= rm -f
+
 CFLAGS		= -Wall -Wextra -Werror
 
-CL 		= ar -rc
-RL 		= ar -s
+.c.o:
+		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $(<:.c=.o)
+
 ${NAME}:	${OBJS}
-		${CL} ${NAME} ${OBJS}
-		${RL} ${NAME}
+		make -C libft
+		cp libft/libft.a $(NAME)
+		ar rcs $(NAME) $(OBJ)
 		echo 'printf is ready'
+
 all:		${NAME}
+
 clean:
+		make clean -C libft
 		${RM} ${OBJS}
 		echo 'Objects removed'
+
 fclean:	clean
 		${RM} ${NAME}
 		echo 'Static library removed'
+
 re:		fclean all

@@ -41,7 +41,6 @@ int ft_formats(va_list args, const char format)
     if(format == 'c')
         print_length = ft_putchar(va_arg(args, int));
     else if(format == 's')
-        print_length = 0;
         print_length = ft_printstr(va_arg(args, int));
     else if(format == 'p')
         print_length = 0;
