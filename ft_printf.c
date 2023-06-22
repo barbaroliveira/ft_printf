@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
 /*criar regra para %c - return 1 char*/
 //ft_putchar
 int ft_putchar(char c)
 {
-	write(1, &c, 1);
+	return (write(1, &c, 1));
 }
 
 /*criar regra para %s - return uma string
@@ -24,6 +24,11 @@ int ft_putchar(char c)
 int ft_printstr(char *str)
 {
     int i;
+    i = 0;
+    if(!str)
+    {
+        
+    }
     while(str[i])
     {
         write(1, &str[i], 1);

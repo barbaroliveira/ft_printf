@@ -12,9 +12,9 @@
 
 NAME		= libftprintf.a
 
-SRCS		= ft_printf.c
+SRCS		= ft_printf.c \
 
-OBJ		= ${SRCS:.c=.o}
+OBJ		= $(SRCS:.c=.o)
 
 INCLUDES = libft/libft.h
 
@@ -25,23 +25,23 @@ RM		= rm -f
 CFLAGS		= -Wall -Wextra -Werror
 
 .c.o:
-		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $(<:.c=.o)
+		$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $(<:.c=.o)
 
-${NAME}:	${OBJS}
+$(NAME):	$(OBJ)
 		make -C libft
 		cp libft/libft.a $(NAME)
 		ar rcs $(NAME) $(OBJ)
 		echo 'printf is ready'
 
-all:		${NAME}
+all:		$(NAME)
 
 clean:
 		make clean -C libft
-		${RM} ${OBJS}
+		$(RM) $(OBJ)
 		echo 'Objects removed'
 
 fclean:	clean
-		${RM} ${NAME}
+		$(RM) $(NAME)
 		echo 'Static library removed'
 
 re:		fclean all
