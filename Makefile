@@ -16,7 +16,7 @@ SRCS		= ft_printf.c
 
 OBJ		= ${SRCS:.c=.o}
 
-INCLUDES = inc/libftprintf.h
+INCLUDES = libft/libft.h
 
 CC		= cc
 
