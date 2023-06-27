@@ -17,6 +17,7 @@
 int ft_putchar(char c)
 {
 	return (write(1, &c, 1));
+    return (1);
 }
 
 /*criar regra para %s - return uma string
@@ -25,10 +26,6 @@ int ft_printstr(char *str)
 {
     int i;
     i = 0;
-    if(!str)
-    {
-        
-    }
     while(str[i])
     {
         write(1, &str[i], 1);
@@ -37,6 +34,33 @@ int ft_printstr(char *str)
     return (i);
 }
 
+/*criar regra para %d - return de um pointer em formato decimal*/
+/*criar regra para %i - return de um integer na base 10*/
+//ft_putnbr
+void	ft_putnbr(int nb)
+{
+	char	c;
+
+	if (nb == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		return ;
+	}
+	if (nb < 0 && nb != -2147483648)
+	{
+		write (1, "-", 1);
+		nb = -nb;
+	}
+	if (nb >= 10)
+	{
+		ft_putnbr(nb / 10);
+	}
+	c = '0' + (nb % 10);
+	write(1, &c, 1);
+}
+
+
+
 //criar uma regra geral que define a funcao que vai utilizar
 //dependendo dos argumentos passados no printf
 int ft_formats(va_list args, const char format)
@@ -44,15 +68,14 @@ int ft_formats(va_list args, const char format)
     int print_length;
     print_length = 0;
     if(format == 'c')
-        print_length = ft_putchar(va_arg(args, int));
+        print_length += ft_putchar(va_arg(args, int));
     else if(format == 's')
-        print_length = ft_printstr(va_arg(args, int));
+        print_length += ft_printstr(va_arg(args, int));
     else if(format == 'p')
         print_length = 0;
         //definir funcao a ser utilizada para p
     else if(format == 'd'|| format == 'i')
-        print_length = 0;
-        //definir funcao a ser utilizada para d e i
+        print_length = ft_itoa(va_arg(args, int));
     else if(format == 'u')
         print_length = 0;
         //definir funcao a ser utilizada para u
@@ -60,14 +83,9 @@ int ft_formats(va_list args, const char format)
         print_length = 0;
         //definir funcao a ser utilizada para x e X
     else if(format == '%')
-        print_length = 0;
         //definir funcao a ser utilizada para %
     return(print_length);
 }
-
-/*criar regra para %d - return de um pointer em formato decimal*/
-/*criar regra para %i - return de um integer na base 10*/
-//ft_putnbr
 
 /*criar regra para %x - return de um numero em hexadecimal formato lowercase*/
 /*criar regra para %X - return de um numero em hexadecimal formato uppercase*/
@@ -83,3 +101,24 @@ int ft_formats(va_list args, const char format)
 
 /*criar funcao principal que vai chamar as funcoes !=s
 */
+int ft_printf(const char *format, ...)
+{
+    va_list arg;
+    int     count;
+
+    va_start(arg, format);
+    count = 0;
+    while (*format != '\0')
+    {
+        if(*format != '%')
+        {
+            format++;
+            count += ft_formats(*format, arg);
+        }
+        else
+            count += ft_putchar(*format);
+        format++;
+    }
+    va_end(arg);
+    return (count);
+}
