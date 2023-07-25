@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdarg.h>
+# include "libft/libft.h"
 
 /*_________[FUNCTIONS]____________*/
 int	ft_putchar(char c);
