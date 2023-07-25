@@ -10,20 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FTPRINTF_H
-# define FTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
+/*_________[libraries]____________*/
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdarg.h>
-/*__________________________________[libraries]_________________________________*/
 
-
-/*_________________________________[FUNCTIONS]________________________________*/
-int ft_putchar(char c);
-int ft_printstr(char *str);
-int ft_formats(va_list args, const char format);
-int ft_printf(const char *str, ...);
+/*_________[FUNCTIONS]____________*/
+int	ft_putchar(char c);
+int	ft_printstr(char *str);
+int	ft_formats(va_list args, const char *str, size_t *i);
+int	ft_printf(const char *str, ...);
 
 #endif

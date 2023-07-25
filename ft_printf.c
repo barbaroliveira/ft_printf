@@ -12,26 +12,23 @@
 
 #include "ft_printf.h"
 
-/*criar regra para %c - return 1 char*/
-//ft_putchar
-int ft_putchar(char c)
+int	ft_putchar(char c)
 {
 	return (write(1, &c, 1));
-    return (1);
+	return (1);
 }
 
-/*criar regra para %s - return uma string
-   - logica do putchar com um ciclo para aceitar uma string*/
-int ft_printstr(char *str)
+int	ft_printstr(char *str)
 {
-    int i;
-    i = 0;
-    while(str[i])
-    {
-        write(1, &str[i], 1);
-        i++;
-    }
-    return (i);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+	return (i);
 }
 
 /*criar regra para %d - return de um pointer em formato decimal*/
@@ -59,32 +56,18 @@ void	ft_putnbr(int nb)
 	write(1, &c, 1);
 }
 
-
-
 //criar uma regra geral que define a funcao que vai utilizar
 //dependendo dos argumentos passados no printf
-int ft_formats(va_list args, const char format)
+int	ft_formats(va_list arg, const char *str, size_t *i)
 {
-    int print_length;
-    print_length = 0;
-    if(format == 'c')
-        print_length += ft_putchar(va_arg(args, int));
-    else if(format == 's')
-        print_length += ft_printstr(va_arg(args, int));
-    else if(format == 'p')
-        print_length = 0;
-        //definir funcao a ser utilizada para p
-    else if(format == 'd'|| format == 'i')
-        print_length = ft_itoa(va_arg(args, int));
-    else if(format == 'u')
-        print_length = 0;
-        //definir funcao a ser utilizada para u
-    else if(format == 'x' || format== 'X')
-        print_length = 0;
-        //definir funcao a ser utilizada para x e X
-    else if(format == '%')
-        //definir funcao a ser utilizada para %
-    return(print_length);
+	int	letter_count;
+
+	letter_count = 0;
+	if (str[*i] == 'c')
+		letter_count += ft_putchar(va_arg(arg, int));
+	else if (str[*i] == 's')
+		letter_count += ft_printstr(va_arg(arg, char *));
+    return(letter_count);
 }
 
 /*criar regra para %x - return de um numero em hexadecimal formato lowercase*/
@@ -104,21 +87,32 @@ int ft_formats(va_list args, const char format)
 int ft_printf(const char *format, ...)
 {
     va_list arg;
-    int     count;
+    int count;
+    size_t i;
 
-    va_start(arg, format);
     count = 0;
-    while (*format != '\0')
+    i = 0;
+    va_start(arg, format);
+    while (format[i])
     {
-        if(*format != '%')
+        if(format[i] == '%')
         {
-            format++;
-            count += ft_formats(*format, arg);
+            i++;
+            count += ft_formats(arg, format, &i);
         }
         else
-            count += ft_putchar(*format);
-        format++;
+        {
+            ft_putchar(format[i]);
+            count++;
+        }
+        i++;
     }
     va_end(arg);
+    //void va_end(va_list argument_list)
+    /*
+    Para cada invocacao de va_start deve ser feita uma evocacao
+    correspondente do va_end na mesma funcao
+    DEPOIS DE INVOCADO, A VARIAVEL ARGUMENT_LIST E INDEFINIDA
+    */
     return (count);
 }
