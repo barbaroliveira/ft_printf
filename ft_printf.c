@@ -31,9 +31,6 @@ int	ft_printstr(char *str)
 	return (i);
 }
 
-/*criar regra para %d - return de um pointer em formato decimal*/
-/*criar regra para %i - return de um integer na base 10*/
-//ft_putnbr
 void	ft_putnbr(int nb)
 {
 	char	c;
@@ -56,8 +53,6 @@ void	ft_putnbr(int nb)
 	write(1, &c, 1);
 }
 
-//criar uma regra geral que define a funcao que vai utilizar
-//dependendo dos argumentos passados no printf
 int	ft_formats(va_list arg, const char *str, size_t *i)
 {
 	int	letter_count;
@@ -67,7 +62,7 @@ int	ft_formats(va_list arg, const char *str, size_t *i)
 		letter_count += ft_putchar(va_arg(arg, int));
 	else if (str[*i] == 's')
 		letter_count += ft_printstr(va_arg(arg, char *));
-    return(letter_count);
+	return (letter_count);
 }
 
 /*criar regra para %x - return de um numero em hexadecimal formato lowercase*/
@@ -84,35 +79,29 @@ int	ft_formats(va_list arg, const char *str, size_t *i)
 
 /*criar funcao principal que vai chamar as funcoes !=s
 */
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-    va_list arg;
-    int count;
-    size_t i;
+	va_list		arg;
+	int			count;
+	size_t		i;
 
-    count = 0;
-    i = 0;
-    va_start(arg, format);
-    while (format[i])
-    {
-        if(format[i] == '%')
-        {
-            i++;
-            count += ft_formats(arg, format, &i);
-        }
-        else
-        {
-            ft_putchar(format[i]);
-            count++;
-        }
-        i++;
-    }
-    va_end(arg);
-    //void va_end(va_list argument_list)
-    /*
-    Para cada invocacao de va_start deve ser feita uma evocacao
-    correspondente do va_end na mesma funcao
-    DEPOIS DE INVOCADO, A VARIAVEL ARGUMENT_LIST E INDEFINIDA
-    */
-    return (count);
+	count = 0;
+	i = 0;
+	va_start(arg, format);
+	while (format[i])
+	{
+		if (format[i] == '%')
+		{
+			i++;
+			count += ft_formats(arg, format, &i);
+		}
+		else
+		{
+			ft_putchar(format[i]);
+			count++;
+		}
+		i++;
+	}
+	va_end(arg);
+	return (count);
 }
