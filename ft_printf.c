@@ -82,6 +82,9 @@ int	ft_print_address(unsigned long long n)
 	return (len);
 }
 
+/*functions to %d and %i*/
+//print_nbr is a funtion that deals with every int value
+//and returns the lenght of that value
 void	ft_putnbr(int nb)
 {
 	char	c;
