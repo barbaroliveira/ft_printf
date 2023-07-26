@@ -28,12 +28,58 @@ int	ft_printstr(char *str)
 		ft_putstr("(null)");
 		return (6);
 	}
-	while (str[i])
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
+	ft_putstr(str);
+	i += ft_strlen(str);
 	return (i);
+}
+/*functions of pointer*/
+//funtion who counts the number of adress's
+int	ft_address_len(unsigned long long n)
+{
+	int	count;
+
+	count = 0;
+	while(n)
+	{
+		count++;
+		n /= 16;
+	}
+	return (count);
+}
+
+void	ft_put_adress(int long long n)
+{
+	if (n >= 16)
+	{
+		ft_put_adress(n / 16);
+		ft_put_adress(n % 16);
+	}
+	else
+	{
+		if(n <= 9)
+			ft_putchar(n + '0');
+		else
+			ft_putchar(n - 10 + 'a');
+	}
+}
+
+int	ft_print_address(unsigned long long n)
+{
+	int	len;
+
+	len = 0;
+	if(n == 0)
+	{
+		len += ft_printstr("(nil)");
+	}
+	else
+	{
+		ft_putstr("0x");
+		len += 2;
+		ft_put_adress(n);
+		len += ft_address_len(n);
+	}
+	return (len);
 }
 
 void	ft_putnbr(int nb)
@@ -58,6 +104,28 @@ void	ft_putnbr(int nb)
 	write(1, &c, 1);
 }
 
+int ft_nbrlen(int n)
+{
+	int i = 0;
+	if(n <= 0)
+	{
+		i++;
+		n = -n;
+	}
+	while (n)
+	{
+		n /= 10;
+		i++;
+	}
+	return (i);
+}
+
+int	ft_print_nbr(int n)
+{
+	ft_putnbr(n);
+	return (ft_nbrlen(n));
+}
+
 int	ft_formats(va_list arg, const char *str, size_t *i)
 {
 	int	letter_count;
@@ -67,6 +135,10 @@ int	ft_formats(va_list arg, const char *str, size_t *i)
 		letter_count += ft_putchar(va_arg(arg, int));
 	else if (str[*i] == 's')
 		letter_count += ft_printstr(va_arg(arg, char *));
+	else if(str[*i] == 'p')
+		letter_count += ft_print_address(va_arg(arg, unsigned long long));
+	else if(str[*i] == 'd' || str[*i] == 'i')
+		letter_count += ft_print_nbr(va_arg(arg, int));
 	return (letter_count);
 }
 
