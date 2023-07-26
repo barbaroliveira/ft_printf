@@ -34,6 +34,8 @@ int	ft_printstr(char *str)
 }
 /*functions of pointer*/
 //funtion who counts the number of adress's
+/*criar regra para %p - return de um pointer em formato hexadecimal*/
+//putnbr_base??
 int	ft_address_len(unsigned long long n)
 {
 	int	count;
@@ -129,6 +131,28 @@ int	ft_print_nbr(int n)
 	return (ft_nbrlen(n));
 }
 
+/*criar regra para %% - return de um sinal de %*/
+
+/*criar regra para %u - return de um unsigned decimal na base 10*/
+/*int	ft_print_unsigned(unsigned int n)
+{
+	//verificar se n = 0 - ft_putchar('0')
+	//caso nao seja, ft_uitoa
+		//atribuimos ao i o valor do len da entrada
+		//malloc para ter o numero de char pretendido
+		//se str for vazia return null
+		//por o '\0' no ultimo espaco da string
+			//enquanto existir n..
+				//n%10 = '0'
+				//n / 10 = n
+		//retorno da string
+}*/
+
+
+/*criar regra para %x - return de um numero em hexadecimal formato lowercase*/
+/*criar regra para %X - return de um numero em hexadecimal formato uppercase*/
+//chamar putnbr_base e fazer if para transformar em lower e upper
+
 int	ft_formats(va_list arg, const char *str, size_t *i)
 {
 	int	letter_count;
@@ -142,20 +166,10 @@ int	ft_formats(va_list arg, const char *str, size_t *i)
 		letter_count += ft_print_address(va_arg(arg, unsigned long long));
 	else if(str[*i] == 'd' || str[*i] == 'i')
 		letter_count += ft_print_nbr(va_arg(arg, int));
+	//else if(str[*i] == 'u')
+	//	letter_count += ft_print_unsigned(va_arg(arg, unsigned int));
 	return (letter_count);
 }
-
-/*criar regra para %x - return de um numero em hexadecimal formato lowercase*/
-/*criar regra para %X - return de um numero em hexadecimal formato uppercase*/
-//chamar putnbr_base e fazer if para transformar em lower e upper
-
-/*criar regra para %u - return de um unsigned decimal na base 10*/
-//nova?
-
-/*criar regra para %p - return de um pointer em formato hexadecimal*/
-//putnbr_base??
-
-/*criar regra para %% - return de um sinal de %*/
 
 /*criar funcao principal que vai chamar as funcoes !=s
 */
