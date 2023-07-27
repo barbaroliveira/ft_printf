@@ -35,25 +35,25 @@ void	ft_put_hex(unsigned int n, const char format)
 			ft_putchar(n + '0');
 		else
 		{
-			if(format == 'x')
+			if (format == 'x')
 				ft_putchar(n - 10 + 'a');
-			else if(format == 'X')
+			else if (format == 'X')
 				ft_putchar(n - 10 + 'A');
 		}
 	}
 }
 
-int ft_print_hex(unsigned int n, const char format)
+int	ft_print_hex(unsigned int n, const char format)
 {
-	int len;
+	int	len;
 
 	len = 0;
-	if(n == 0)
+	if (n == 0)
 	{
 		ft_putchar('0');
 		return (1);
 	}
-	if(format == 'x')
+	if (format == 'x')
 		len += ft_printstr("0x");
 	else if (format == 'X')
 		len += ft_printstr("0X");
@@ -70,15 +70,15 @@ int	ft_formats(va_list arg, const char *str, size_t *i)
 		letter_count += ft_print_chr(va_arg(arg, int));
 	else if (str[*i] == 's')
 		letter_count += ft_printstr(va_arg(arg, char *));
-	else if(str[*i] == 'p')
+	else if (str[*i] == 'p')
 		letter_count += ft_print_address(va_arg(arg, unsigned long long));
-	else if(str[*i] == 'd' || str[*i] == 'i')
+	else if (str[*i] == 'd' || str[*i] == 'i')
 		letter_count += ft_print_nbr(va_arg(arg, int));
-	else if(str[*i] == '%')
+	else if (str[*i] == '%')
 		letter_count += ft_print_percent();
-	else if(str[*i] == 'x' || str[*i] == 'X')
+	else if (str[*i] == 'x' || str[*i] == 'X')
 		letter_count += ft_print_nbr(va_arg(arg, unsigned int));
-	else if(str[*i] == 'u')
+	else if (str[*i] == 'u')
 		letter_count += ft_put_unsigned(va_arg(arg, unsigned int));
 	return (letter_count);
 }

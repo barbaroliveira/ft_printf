@@ -36,7 +36,7 @@ void	ft_print_unsig(unsigned int nb, int *count)
 
 int	ft_put_unsigned(unsigned int n)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (n < 0)
