@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bapereir <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: bapereir <bapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/13 15:17:33 by bapereir          #+#    #+#              #
-#    Updated: 2023/05/13 15:18:34 by bapereir         ###   ########.fr        #
+#    Updated: 2023/07/27 16:42:25 by bapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= libftprintf.a
 
-SRCS		= ft_printf.c ft_print_1.c
+SRCS		= ft_printf.c ft_print_%c%s.c
 
 OBJ		= $(SRCS:.c=.o)
 
