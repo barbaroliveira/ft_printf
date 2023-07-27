@@ -154,19 +154,41 @@ int	ft_print_percent(void)
 }
 
 /*criar regra para %u - return de um unsigned decimal na base 10*/
-/*int	ft_print_unsigned(unsigned int n)
+int	ft_putchar_int(char c)
 {
-	//verificar se n = 0 - ft_putchar('0')
-	//caso nao seja, ft_uitoa
-		//atribuimos ao i o valor do len da entrada
-		//malloc para ter o numero de char pretendido
-		//se str for vazia return null
-		//por o '\0' no ultimo espaco da string
-			//enquanto existir n..
-				//n%10 = '0'
-				//n / 10 = n
-		//retorno da string
-}*/
+	int	i;
+
+	i = 0;
+	write(1, &c, 1);
+	i++;
+	return (i);
+}
+
+void	ft_print_unsig(unsigned int nb, int *count)
+{
+	if(nb < 10)
+	{
+		*count += ft_putchar_int(nb + 48);
+		return ;
+	}
+	else
+		ft_print_unsig(nb / 10, count);
+	ft_print_unsig(nb % 10, count);
+}
+
+int	ft_put_unsigned(unsigned int n)
+{
+	int count;
+
+	count = 0;
+	if (n < 0)
+	{
+		ft_putchar('-');
+		n *= -1;
+	}
+	ft_print_unsig(n, &count);
+	return (count);
+}
 /*criar regra para %x - return de um numero em hexadecimal formato lowercase*/
 /*criar regra para %X - return de um numero em hexadecimal formato uppercase*/
 //chamar putnbr_base e fazer if para transformar em lower e upper
@@ -226,6 +248,8 @@ int	ft_formats(va_list arg, const char *str, size_t *i)
 		letter_count += ft_print_percent();
 	else if(str[*i] == 'x' || str[*i] == 'X')
 		letter_count += ft_print_nbr(va_arg(arg, unsigned int));
+	else if(str[*i] == 'u')
+		letter_count += ft_put_unsigned(va_arg(arg, unsigned int));
 	return (letter_count);
 }
 
