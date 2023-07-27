@@ -6,7 +6,7 @@
 /*   By: bapereir <bapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 16:08:57 by bapereir          #+#    #+#             */
-/*   Updated: 2023/07/27 16:57:25 by bapereir         ###   ########.fr       */
+/*   Updated: 2023/07/27 17:05:17 by bapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,42 +19,6 @@ int	ft_print_percent(void)
 	return (1);
 }
 
-/*criar regra para %u - return de um unsigned decimal na base 10*/
-int	ft_putchar_int(char c)
-{
-	int	i;
-
-	i = 0;
-	write(1, &c, 1);
-	i++;
-	return (i);
-}
-
-void	ft_print_unsig(unsigned int nb, int *count)
-{
-	if(nb < 10)
-	{
-		*count += ft_putchar_int(nb + 48);
-		return ;
-	}
-	else
-		ft_print_unsig(nb / 10, count);
-	ft_print_unsig(nb % 10, count);
-}
-
-int	ft_put_unsigned(unsigned int n)
-{
-	int count;
-
-	count = 0;
-	if (n < 0)
-	{
-		ft_putchar('-');
-		n *= -1;
-	}
-	ft_print_unsig(n, &count);
-	return (count);
-}
 /*criar regra para %x - return de um numero em hexadecimal formato lowercase*/
 /*criar regra para %X - return de um numero em hexadecimal formato uppercase*/
 //chamar putnbr_base e fazer if para transformar em lower e upper
