@@ -12,10 +12,14 @@
 
 #include "ft_printf.h"
 
-int	ft_putchar(char c)
+int	ft_print_chr(char c)
 {
-	return (write(1, &c, 1));
-	return (1);
+	int	len;
+
+	len = 0;
+	ft_putchar(c);
+	len += 1;
+	return (len);
 }
 
 int	ft_printstr(char *str)
@@ -23,7 +27,7 @@ int	ft_printstr(char *str)
 	int	i;
 
 	i = 0;
-	if(!str)
+	if (!str)
 	{
 		ft_putstr("(null)");
 		return (6);
@@ -32,6 +36,7 @@ int	ft_printstr(char *str)
 	i += ft_strlen(str);
 	return (i);
 }
+
 /*functions of pointer*/
 //funtion who counts the number of adress's
 /*criar regra para %p - return de um pointer em formato hexadecimal*/
@@ -41,7 +46,7 @@ int	ft_address_len(unsigned long long n)
 	int	count;
 
 	count = 0;
-	while(n)
+	while (n)
 	{
 		count++;
 		n /= 16;
@@ -49,8 +54,10 @@ int	ft_address_len(unsigned long long n)
 	return (count);
 }
 
-void	ft_put_adress(int long long n)
+void	ft_put_adress(unsigned long long n)
 {
+	char	result;
+
 	if (n >= 16)
 	{
 		ft_put_adress(n / 16);
@@ -58,10 +65,16 @@ void	ft_put_adress(int long long n)
 	}
 	else
 	{
-		if(n <= 9)
-			ft_putchar(n + '0');
+		if (n <= 9)
+		{
+			result = n + '0';
+			ft_putchar(result);
+		}
 		else
-			ft_putchar(n - 10 + 'a');
+		{
+			result = n - 10 + 'a';
+			ft_putchar(result);
+		}
 	}
 }
 
@@ -70,7 +83,7 @@ int	ft_print_address(unsigned long long n)
 	int	len;
 
 	len = 0;
-	if(n == 0)
+	if (n == 0)
 	{
 		len += ft_printstr("(nil)");
 	}
@@ -109,10 +122,12 @@ void	ft_putnbr(int nb)
 	write(1, &c, 1);
 }
 
-int ft_nbrlen(int n)
+int	ft_nbrlen(int n)
 {
-	int i = 0;
-	if(n <= 0)
+	int	i;
+
+	i = 0;
+	if (n <= 0)
 	{
 		i++;
 		n = -n;
@@ -132,6 +147,11 @@ int	ft_print_nbr(int n)
 }
 
 /*criar regra para %% - return de um sinal de %*/
+int	ft_print_percent(void)
+{
+	ft_putchar('%');
+	return (1);
+}
 
 /*criar regra para %u - return de um unsigned decimal na base 10*/
 /*int	ft_print_unsigned(unsigned int n)
@@ -147,11 +167,47 @@ int	ft_print_nbr(int n)
 				//n / 10 = n
 		//retorno da string
 }*/
-
-
 /*criar regra para %x - return de um numero em hexadecimal formato lowercase*/
 /*criar regra para %X - return de um numero em hexadecimal formato uppercase*/
 //chamar putnbr_base e fazer if para transformar em lower e upper
+void	ft_put_hex(unsigned int n, const char format)
+{
+	if (n >= 16)
+	{
+		ft_put_hex(n / 16, format);
+		ft_put_hex(n % 16, format);
+	}
+	else
+	{
+		if (n <= 9)
+			ft_putchar(n + '0');
+		else
+		{
+			if(format == 'x')
+				ft_putchar(n - 10 + 'a');
+			else if(format == 'X')
+				ft_putchar(n - 10 + 'A');
+		}
+	}
+}
+
+int ft_print_hex(unsigned int n, const char format)
+{
+	int len;
+
+	len = 0;
+	if(n == 0)
+	{
+		ft_putchar('0');
+		return (1);
+	}
+	if(format == 'x')
+		len += ft_printstr("0x");
+	else if (format == 'X')
+		len += ft_printstr("0X");
+	ft_put_hex(n, format);
+	return (len);
+}
 
 int	ft_formats(va_list arg, const char *str, size_t *i)
 {
@@ -159,15 +215,17 @@ int	ft_formats(va_list arg, const char *str, size_t *i)
 
 	letter_count = 0;
 	if (str[*i] == 'c')
-		letter_count += ft_putchar(va_arg(arg, int));
+		letter_count += ft_print_chr(va_arg(arg, int));
 	else if (str[*i] == 's')
 		letter_count += ft_printstr(va_arg(arg, char *));
 	else if(str[*i] == 'p')
 		letter_count += ft_print_address(va_arg(arg, unsigned long long));
 	else if(str[*i] == 'd' || str[*i] == 'i')
 		letter_count += ft_print_nbr(va_arg(arg, int));
-	//else if(str[*i] == 'u')
-	//	letter_count += ft_print_unsigned(va_arg(arg, unsigned int));
+	else if(str[*i] == '%')
+		letter_count += ft_print_percent();
+	else if(str[*i] == 'x' || str[*i] == 'X')
+		letter_count += ft_print_nbr(va_arg(arg, unsigned int));
 	return (letter_count);
 }
 

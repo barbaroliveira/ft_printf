@@ -21,7 +21,6 @@
 # include "libft/libft.h"
 
 /*_________[FUNCTIONS]____________*/
-int	ft_putchar(char c);
 int	ft_printstr(char *str);
 int	ft_formats(va_list args, const char *str, size_t *i);
 int	ft_printf(const char *str, ...);
