@@ -6,13 +6,13 @@
 #    By: bapereir <bapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/13 15:17:33 by bapereir          #+#    #+#              #
-#    Updated: 2023/07/27 16:52:41 by bapereir         ###   ########.fr        #
+#    Updated: 2023/07/27 16:58:13 by bapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= libftprintf.a
 
-SRCS		= ft_printf.c ft_print_%c%s.c ft_print_%p.c
+SRCS		= ft_printf.c ft_print_%c%s.c ft_print_%p.c ft_print_%d%i.c
 
 OBJ		= $(SRCS:.c=.o)
 
